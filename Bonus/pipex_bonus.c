@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 11:01:43 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:20:02 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,5 @@ int	main(int ac, char **av, char **env)
 		err_msg(FORK_ERR);
 	if (pid == 0)
 		execute_comamnd(av[ac - 2], env);
-	wait(NULL);
+	return (0);
 }
