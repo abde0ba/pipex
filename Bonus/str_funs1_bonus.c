@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:50:39 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/07 17:25:39 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:29:07 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,10 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	return (NULL);
 }
 
-
+void	close_two(int fd1, int fd2)
+{
+	if (close(fd1) == -1)
+		err_msg(CLOSE_ERR);
+	else if (close(fd2) == -1)
+		err_msg(CLOSE_ERR);
+}

@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:51 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/08 16:25:25 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/09 15:00:29 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ void	dup2_handler(int to_dup, int into)
 
 void	wait_hundler(int *p)
 {
-	if(wait(p) < 0)
+	if (wait(p) < 0)
 		err_msg(WAIT_ERR);
 }

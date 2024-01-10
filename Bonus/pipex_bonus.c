@@ -6,19 +6,11 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 12:20:02 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:30:43 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	close_two(int fd1, int fd2)
-{
-	if (close(fd1) == -1)
-		err_msg(CLOSE_ERR);
-	else if (close(fd2) == -1)
-		err_msg(CLOSE_ERR);
-}
 
 void	execute_comamnd(char *cmd, char **env)
 {
@@ -26,6 +18,7 @@ void	execute_comamnd(char *cmd, char **env)
 	char	*path;
 
 	cmd_args = ft_split(cmd, ' ');
+	printf("asd");
 	path = check_cmd(cmd_args[0], env);
 	if (!path)
 		err_msg(CMD_ERR);
@@ -54,6 +47,7 @@ void	create_process(char *command, char **env)
 	{
 		dup2_handler(pipefd[0], STDIN_FILENO);
 		close_two(pipefd[1], pipefd[0]);
+		waitpid(pid, NULL, 0);
 	}
 }
 
@@ -68,7 +62,8 @@ int	here_doc_fn(int	*cmd_number, char **av, int ac, int *outfile)
 	ft_putstr(STDOUT_FILENO, "heredoc > ");
 	str = get_next_line(0);
 	infile = open("/tmp/.here_tmp", O_RDWR | O_TRUNC | O_CREAT, 0644);
-	while (ft_strncmp(str, av[2], ft_strlen(str)) != 0 && str[ft_strlen(av[2])] != '\n')
+	while (ft_strncmp(str, av[2], ft_strlen(str)) != 0
+		&& str[ft_strlen(av[2])] != '\n')
 	{
 		write(infile, str, ft_strlen(str));
 		ft_putstr(STDOUT_FILENO, "heredoc > ");
@@ -80,9 +75,22 @@ int	here_doc_fn(int	*cmd_number, char **av, int ac, int *outfile)
 	if (infile < 0)
 		err_msg(OPEN_ERR);
 	*outfile = open(av[ac - 1], O_RDWR | O_APPEND | O_CREAT, 0644);
-		if (*outfile < 0)
-			err_msg(OPEN_ERR);
+	if (*outfile < 0)
+		err_msg(OPEN_ERR);
 	return (infile);
+}
+
+void	last_command(int ac, char **av, char **env)
+{
+	int		pid;
+
+	pid = fork();
+	if (pid == -1)
+		err_msg(FORK_ERR);
+	if (pid == 0)
+		execute_comamnd(av[ac - 2], env);
+	else
+		waitpid(pid, NULL, 0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -90,7 +98,6 @@ int	main(int ac, char **av, char **env)
 	int		cmd_number;
 	int		infile;
 	int		outfile;
-	int		pid;
 
 	if (ft_strncmp(av[1], "here_doc", ft_strlen("here_doc")) == 0)
 		infile = here_doc_fn(&cmd_number, av, ac, &outfile);
@@ -107,10 +114,7 @@ int	main(int ac, char **av, char **env)
 	}
 	unlink("/tmp/.here_tmp");
 	dup2_handler(outfile, STDOUT_FILENO);
-	wait_hundler(NULL);
-	if ((pid = fork()) < 0)
-		err_msg(FORK_ERR);
-	if (pid == 0)
-		execute_comamnd(av[ac - 2], env);
+	last_command(ac, av, env);
+	
 	return (0);
 }

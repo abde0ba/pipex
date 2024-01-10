@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:51 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/07 14:27:54 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/09 14:58:12 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	err_msg(int err_num)
 		ft_putstr(STDERR_FILENO, "Error in waiting for another process.");
 	exit(EXIT_FAILURE);
 }
+
 void	dup2_handler(int to_dup, int into)
 {
 	if (dup2(to_dup, into) < 0)

@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:49 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 10:43:17 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:19:33 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ char	*check_cmd(char *command, char **env);
 void	first_command(int *pipefd, char **av, char **env);
 void	second_command(int *pipefd, char **av, char **env);
 void	dup2_handler(int to_dup, int into);
+void	execute_comamnd(char *cmd, char **env);
 
 #endif
