@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:47 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 10:45:02 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/12 22:23:53 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,28 @@ char	*check_cmd(char *command, char **env)
 	return (NULL);
 }
 
+void	execute_comamnd(char *cmd, char **env)
+{
+	char	**cmd_args;
+	char	*path;
+
+	cmd_args = ft_split(cmd, ' ');
+	path = check_cmd(cmd_args[0], env);
+	if (ft_strchr(cmd, '/'))
+	{
+		if (execve(cmd, NULL, env) == -1)
+			err_msg(EXECVE_ERR);
+	}
+	else
+	{
+		if (!path)
+			err_msg(CMD_ERR);
+		if (execve(path, cmd_args, env) == -1)
+			err_msg(EXECVE_ERR);
+	}
+	free(cmd_args);
+}
+
 int	open_a_file(char *name, char *type)
 {
 	int	filename;
@@ -106,12 +128,4 @@ int	open_a_file(char *name, char *type)
 			err_msg(OPEN_ERR);
 	}
 	return (filename);
-}
-
-void	open_files(char **av, int ac, int *infile, int *outfile)
-{
-	if (ac < 5)
-		err_msg(ARGS_ERR);
-	*infile = open_a_file(av[1], "infile");
-	*outfile = open_a_file(av[ac - 1], "outfile");
 }

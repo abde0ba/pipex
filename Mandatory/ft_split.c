@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 14:54:24 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 21:16:23 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/13 11:58:26 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char	*create_word(const char *s, int len)
 	i = 0;
 	ptr = (char *)malloc((sizeof(char)) * (len + 1));
 	if (!ptr)
-		return (NULL); 
+		return (NULL);
 	while (i < len)
 	{
 		ptr[i] = s[i];

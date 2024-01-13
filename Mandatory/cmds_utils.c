@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:47 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/07 14:55:31 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/12 10:55:23 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,20 @@ char	*check_cmd(char *command, char **env)
 			return (cmd);
 	}
 	return (NULL);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == (char)c)
+			return ((char *)(s + i));
+		i++;
+	}
+	if (s[i] == (char)c)
+		return ((char *)(s + i));
+	return (0);
 }

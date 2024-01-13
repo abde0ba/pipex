@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:50:35 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/07 10:30:10 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/12 22:19:55 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,12 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return (NULL);
 	ft_strlcpy(ptr, &s1[start], end - start + 2);
 	return (ptr);
+}
+
+void	open_files(char **av, int ac, int *infile, int *outfile)
+{
+	if (ac < 5)
+		err_msg(ARGS_ERR);
+	*infile = open_a_file(av[1], "infile");
+	*outfile = open_a_file(av[ac - 1], "outfile");
 }

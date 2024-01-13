@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 14:23:56 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/08 17:47:09 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/12 22:18:12 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,26 +38,6 @@ char	*ft_strjoin(char *s1, char *s2)
 	ptr[j + i] = '\0';
 	return (free(s1), s1 = NULL, ptr);
 }
-
-// char	*ft_strdup(const char *s1)
-// {
-// 	size_t		i;
-// 	char		*ptr;
-
-// 	i = 0;
-// 	if (!s1)
-// 		return (NULL);
-// 	ptr = (char *)malloc(ft_strlen(s1) + 1);
-// 	if (!ptr)
-// 		return (NULL);
-// 	while (s1[i] != '\0')
-// 	{
-// 		ptr[i] = s1[i];
-// 		i++;
-// 	}
-// 	ptr[i] = '\0';
-// 	return (ptr);
-// }
 
 char	*ft_substr(char *s)
 {

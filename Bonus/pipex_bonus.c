@@ -6,26 +6,11 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 18:30:43 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/13 12:00:33 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-
-void	execute_comamnd(char *cmd, char **env)
-{
-	char	**cmd_args;
-	char	*path;
-
-	cmd_args = ft_split(cmd, ' ');
-	printf("asd");
-	path = check_cmd(cmd_args[0], env);
-	if (!path)
-		err_msg(CMD_ERR);
-	if (execve(path, cmd_args, env) == -1)
-		err_msg(EXECVE_ERR);
-	free(cmd_args);
-}
 
 void	create_process(char *command, char **env)
 {
@@ -47,28 +32,38 @@ void	create_process(char *command, char **env)
 	{
 		dup2_handler(pipefd[0], STDIN_FILENO);
 		close_two(pipefd[1], pipefd[0]);
-		waitpid(pid, NULL, 0);
 	}
+}
+
+void	here_doc_fill(int *infile, char **av)
+{
+	char	*str;
+
+	ft_putstr(STDOUT_FILENO, "heredoc > ");
+	str = get_next_line(0);
+	while (1)
+	{
+		write(*infile, str, ft_strlen(str));
+		ft_putstr(STDOUT_FILENO, "heredoc > ");
+		free(str);
+		str = NULL;
+		str = get_next_line(0);
+		if (str[ft_strlen(av[2])] == '\n'
+			&& !ft_strncmp(str, av[2], ft_strlen(av[2])))
+			break ;
+	}
+	free(str);
 }
 
 int	here_doc_fn(int	*cmd_number, char **av, int ac, int *outfile)
 {
 	int		infile;
-	char	*str;
 
 	if (ac < 6)
 		err_msg(ARGS_ERR);
 	*cmd_number = 3;
-	ft_putstr(STDOUT_FILENO, "heredoc > ");
-	str = get_next_line(0);
 	infile = open("/tmp/.here_tmp", O_RDWR | O_TRUNC | O_CREAT, 0644);
-	while (ft_strncmp(str, av[2], ft_strlen(str)) != 0
-		&& str[ft_strlen(av[2])] != '\n')
-	{
-		write(infile, str, ft_strlen(str));
-		ft_putstr(STDOUT_FILENO, "heredoc > ");
-		str = get_next_line(0);
-	}
+	here_doc_fill(&infile, av);
 	if (close(infile) == -1)
 		err_msg(CLOSE_ERR);
 	infile = open("/tmp/.here_tmp", O_RDONLY, 0777);
@@ -90,7 +85,7 @@ void	last_command(int ac, char **av, char **env)
 	if (pid == 0)
 		execute_comamnd(av[ac - 2], env);
 	else
-		waitpid(pid, NULL, 0);
+		close(0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -115,6 +110,8 @@ int	main(int ac, char **av, char **env)
 	unlink("/tmp/.here_tmp");
 	dup2_handler(outfile, STDOUT_FILENO);
 	last_command(ac, av, env);
-	
+	while (wait(NULL) != -1)
+		break ;
+	close_two(infile, outfile);
 	return (0);
 }

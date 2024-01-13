@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 18:21:24 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/13 11:56:53 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,18 @@ void	execute_comamnd(char *cmd, char **env)
 
 	cmd_args = ft_split(cmd, ' ');
 	path = check_cmd(cmd_args[0], env);
-	if (!path)
-		err_msg(CMD_ERR);
-	if (execve(path, cmd_args, env) == -1)
-		err_msg(EXECVE_ERR);
+	if (ft_strchr(cmd, '/'))
+	{
+		if (execve(cmd, NULL, env) == -1)
+			err_msg(EXECVE_ERR);
+	}
+	else
+	{
+		if (!path)
+			err_msg(CMD_ERR);
+		if (execve(path, cmd_args, env) == -1)
+			err_msg(EXECVE_ERR);
+	}
 	free(cmd_args);
 }
 
@@ -45,13 +53,15 @@ void	first_command(int *pipefd, char **av, char **env)
 	if (infile < 0)
 		err_msg(OPEN_ERR);
 	dup2_handler(infile, STDIN_FILENO);
+	if (close(infile) == -1)
+		err_msg(CLOSE_ERR);
 	execute_comamnd(av[2], env);
 }
 
 void	second_command(int *pipefd, char **av, char **env)
 {
-	int		output;
-	
+	int	output;
+
 	if (close(pipefd[1]) == -1)
 		err_msg(CLOSE_ERR);
 	dup2_handler(pipefd[0], STDIN_FILENO);
@@ -61,13 +71,15 @@ void	second_command(int *pipefd, char **av, char **env)
 	if (output < 0)
 		err_msg(OPEN_ERR);
 	dup2_handler(output, STDOUT_FILENO);
+	if (close(output) == -1)
+		err_msg(CLOSE_ERR);
 	execute_comamnd(av[3], env);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	pid_t pid;
-	pid_t pid1;
+	pid_t	pid;
+	pid_t	pid1;
 	int		pipefd[2];
 	int		tube;
 

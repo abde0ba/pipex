@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:49 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 17:39:17 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/13 11:58:56 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,6 @@ void	open_files(char **av, int ac, int *infile, int *outfile);
 void	dup2_handler(int to_dup, int into);
 void	wait_hundler(int *p);
 void	close_two(int fd1, int fd2);
+void	here_doc_fill(int *infile, char **av);
 
 #endif	
