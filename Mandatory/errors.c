@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:51 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/14 14:42:44 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:21:37 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,24 @@ void	ft_putstr(int fd, char *str)
 void	err_msg(int err_num)
 {
 	if (err_num == PIPE_ERR)
-		ft_putstr(STDERR_FILENO, "Error in creating a pipe.");
+		perror("pipe");
 	else if (err_num == FORK_ERR)
-		ft_putstr(STDERR_FILENO, "Error in making a fork.");
+		perror("fork");
 	else if (err_num == CMD_ERR)
-		ft_putstr(STDERR_FILENO, "The command could not be found.");
+		perror("command");
 	else if (err_num == ARGS_ERR)
 		ft_putstr(STDERR_FILENO,
 			"\033[1;33mPlease provide only required arguments\033[0m");
-	else if (err_num == FILE_ERR)
-		ft_putstr(STDERR_FILENO, "Please provide a valid name for the file.");
 	else if (err_num == OPEN_ERR)
-		ft_putstr(STDERR_FILENO, "Error in opening the file.");
+		perror("open");
 	else if (err_num == EXECVE_ERR)
-		ft_putstr(STDERR_FILENO, "Error in execve function");
+		perror("execve");
 	else if (err_num == CLOSE_ERR)
-		ft_putstr(STDERR_FILENO, "Error in closing the file.");
+		perror("close");
 	else if (err_num == WAIT_ERR)
-		ft_putstr(STDERR_FILENO, "Error in waiting for another process.");
+		perror("wait");
 	else if (err_num == DUP2_ERR)
-		ft_putstr(STDERR_FILENO, "Error in redirecting the file descriptor");
+		perror("dup2");
 	exit(EXIT_FAILURE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/14 13:07:49 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:24:36 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,6 @@ void	second_command(int *pipefd, char **av, char **env)
 	if (close(pipefd[1]) == -1)
 		err_msg(CLOSE_ERR);
 	dup2_handler(pipefd[0], STDIN_FILENO);
-	if (!ft_strlen(av[4]))
-		err_msg(FILE_ERR);
 	output = open(av[4], O_RDWR | O_TRUNC | O_CREAT, 0644);
 	if (output < 0)
 		err_msg(OPEN_ERR);
@@ -83,7 +81,6 @@ int	main(int ac, char **av, char **env)
 	int		pipefd[2];
 	int		tube;
 
-	(void)ac;
 	if (ac != 5)
 		err_msg(ARGS_ERR);
 	tube = pipe(pipefd);

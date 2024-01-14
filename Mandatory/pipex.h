@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:49 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/14 13:07:59 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:22:30 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@
 # define PIPE_ERR		2
 # define CMD_ERR		3
 # define ARGS_ERR		4
-# define FILE_ERR		5
-# define OPEN_ERR		6
-# define EXECVE_ERR		7
-# define CLOSE_ERR		8
-# define WAIT_ERR		9
-# define DUP2_ERR		10
+# define OPEN_ERR		5
+# define EXECVE_ERR		6
+# define CLOSE_ERR		7
+# define WAIT_ERR		8
+# define DUP2_ERR		9
 
 # include <stdlib.h>
 # include <unistd.h>
