@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:51 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/14 15:23:54 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:30:30 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	err_msg(int err_num)
 		perror("wait");
 	else if (err_num == DUP2_ERR)
 		perror("dup2");
+	else if (err_num == DUP_ERR)
+		perror("dup");
 	exit(EXIT_FAILURE);
 }
 
