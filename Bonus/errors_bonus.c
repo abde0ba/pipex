@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:51 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 15:00:29 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:13:15 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	err_msg(int err_num)
 	else if (err_num == WAIT_ERR)
 		ft_putstr(STDERR_FILENO, "Error in waiting for another process.");
 	else if (err_num == DUP2_ERR)
+		ft_putstr(STDERR_FILENO, "Error in redirecting the file descriptor");
+	else if (err_num == DUP_ERR)
 		ft_putstr(STDERR_FILENO, "Error in duplicating the file descriptor");
 	exit(EXIT_FAILURE);
 }

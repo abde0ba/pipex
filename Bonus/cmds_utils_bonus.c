@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:47 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/12 22:23:53 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:07:14 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*check_cmd(char *command, char **env)
 	return (NULL);
 }
 
-void	execute_comamnd(char *cmd, char **env)
+void	execute_command(char *cmd, char **env)
 {
 	char	**cmd_args;
 	char	*path;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/10 14:23:56 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/12 22:18:12 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 14:07:52 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,14 @@ int	ft_strchr(const char *s, int c)
 	if (s[i] == (char)c)
 		return (1);
 	return (0);
+}
+
+int	dup_handler(int to_dup)
+{
+	int	fd;
+
+	fd = dup(to_dup);
+	if (fd == -1)
+		err_msg(DUP_ERR);
+	return (fd);
 }

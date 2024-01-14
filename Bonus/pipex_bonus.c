@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/13 12:00:33 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:12:34 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	create_process(char *command, char **env)
 	{
 		dup2_handler(pipefd[1], STDOUT_FILENO);
 		close_two(pipefd[0], pipefd[1]);
-		execute_comamnd(command, env);
+		execute_command(command, env);
 	}
 	else
 	{
 		dup2_handler(pipefd[0], STDIN_FILENO);
-		close_two(pipefd[1], pipefd[0]);
+		close_two(pipefd[0], pipefd[1]);
 	}
 }
 
@@ -41,7 +41,8 @@ void	here_doc_fill(int *infile, char **av)
 
 	ft_putstr(STDOUT_FILENO, "heredoc > ");
 	str = get_next_line(0);
-	while (1)
+	while (str[ft_strlen(av[2])] != '\n'
+		&& ft_strncmp(str, av[2], ft_strlen(str)) != 0)
 	{
 		write(*infile, str, ft_strlen(str));
 		ft_putstr(STDOUT_FILENO, "heredoc > ");
@@ -75,7 +76,7 @@ int	here_doc_fn(int	*cmd_number, char **av, int ac, int *outfile)
 	return (infile);
 }
 
-void	last_command(int ac, char **av, char **env)
+void	last_command(int ac, char **av, char **env, int *std)
 {
 	int		pid;
 
@@ -83,9 +84,15 @@ void	last_command(int ac, char **av, char **env)
 	if (pid == -1)
 		err_msg(FORK_ERR);
 	if (pid == 0)
-		execute_comamnd(av[ac - 2], env);
+		execute_command(av[ac - 2], env);
 	else
-		close(0);
+	{
+		dup2_handler(std[0], STDIN_FILENO);
+		dup2_handler(std[1], STDOUT_FILENO);
+		close_two(std[0], std[1]);
+		while (wait(NULL) != -1)
+			;
+	}
 }
 
 int	main(int ac, char **av, char **env)
@@ -93,7 +100,10 @@ int	main(int ac, char **av, char **env)
 	int		cmd_number;
 	int		infile;
 	int		outfile;
+	int		std[2];
 
+	std[0] = dup_handler(STDIN_FILENO);
+	std[1] = dup_handler(STDOUT_FILENO);
 	if (ft_strncmp(av[1], "here_doc", ft_strlen("here_doc")) == 0)
 		infile = here_doc_fn(&cmd_number, av, ac, &outfile);
 	else
@@ -103,15 +113,10 @@ int	main(int ac, char **av, char **env)
 	}
 	dup2_handler(infile, STDIN_FILENO);
 	while (cmd_number < ac - 2)
-	{
-		create_process(av[cmd_number], env);
-		cmd_number++;
-	}
+		create_process(av[cmd_number++], env);
 	unlink("/tmp/.here_tmp");
 	dup2_handler(outfile, STDOUT_FILENO);
-	last_command(ac, av, env);
-	while (wait(NULL) != -1)
-		break ;
+	last_command(ac, av, env, std);
 	close_two(infile, outfile);
 	return (0);
 }

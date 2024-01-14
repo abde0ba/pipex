@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:49 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/13 11:58:56 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 14:51:47 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define CLOSE_ERR		8
 # define WAIT_ERR		9
 # define DUP2_ERR		10
+# define DUP_ERR		11
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -31,6 +32,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
+# include <sys/wait.h>
 
 /* GET_NEXT_LINE */
 
@@ -62,13 +64,15 @@ void	err_msg(int err_num);
 void	fn_fill(char *dst, char *src);
 char	*access_cmd(char *found, char *command);
 char	*check_cmd(char *command, char **env);
-void	execute_comamnd(char *cmd, char **env);
+void	execute_command(char *cmd, char **env);
 void	create_process(char *command, char **env);
 int		open_a_file(char *name, char *type);
 void	open_files(char **av, int ac, int *infile, int *outfile);
 void	dup2_handler(int to_dup, int into);
+int		dup_handler(int to_dup);
 void	wait_hundler(int *p);
 void	close_two(int fd1, int fd2);
 void	here_doc_fill(int *infile, char **av);
+void	last_command(int ac, char **av, char **env, int *std);
 
 #endif	

@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:44 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/13 11:56:53 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:07:49 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	close_two(int fd1, int fd2)
 		err_msg(CLOSE_ERR);
 }
 
-void	execute_comamnd(char *cmd, char **env)
+void	execute_command(char *cmd, char **env)
 {
 	char	**cmd_args;
 	char	*path;
@@ -55,7 +55,7 @@ void	first_command(int *pipefd, char **av, char **env)
 	dup2_handler(infile, STDIN_FILENO);
 	if (close(infile) == -1)
 		err_msg(CLOSE_ERR);
-	execute_comamnd(av[2], env);
+	execute_command(av[2], env);
 }
 
 void	second_command(int *pipefd, char **av, char **env)
@@ -73,7 +73,7 @@ void	second_command(int *pipefd, char **av, char **env)
 	dup2_handler(output, STDOUT_FILENO);
 	if (close(output) == -1)
 		err_msg(CLOSE_ERR);
-	execute_comamnd(av[3], env);
+	execute_command(av[3], env);
 }
 
 int	main(int ac, char **av, char **env)

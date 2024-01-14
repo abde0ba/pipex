@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:49 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/12 10:55:39 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 13:07:59 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <sys/wait.h>
 
 /* LIBFT FUNCTIONS */
 
@@ -52,6 +53,6 @@ char	*check_cmd(char *command, char **env);
 void	first_command(int *pipefd, char **av, char **env);
 void	second_command(int *pipefd, char **av, char **env);
 void	dup2_handler(int to_dup, int into);
-void	execute_comamnd(char *cmd, char **env);
+void	execute_command(char *cmd, char **env);
 
 #endif

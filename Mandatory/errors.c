@@ -6,7 +6,7 @@
 /*   By: abbaraka <abbaraka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 13:01:51 by abbaraka          #+#    #+#             */
-/*   Updated: 2024/01/09 14:58:12 by abbaraka         ###   ########.fr       */
+/*   Updated: 2024/01/14 14:42:44 by abbaraka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	err_msg(int err_num)
 		ft_putstr(STDERR_FILENO, "Error in closing the file.");
 	else if (err_num == WAIT_ERR)
 		ft_putstr(STDERR_FILENO, "Error in waiting for another process.");
+	else if (err_num == DUP2_ERR)
+		ft_putstr(STDERR_FILENO, "Error in redirecting the file descriptor");
 	exit(EXIT_FAILURE);
 }
 
